@@ -153,8 +153,11 @@ ApplicationWindow {
             minuteAngle = (6 * minute + 0.1 * second + 90) % 360
             secondAngle = (6 * second + 90) % 360
 
-            const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-            dateString = date.toLocaleDateString('vi-VN', dateOptions);
+            const day = pad(date.getDate())
+            const month = pad(date.getMonth() + 1)
+            const year = date.getFullYear();
+
+            dateString = day + "/" + month + "/" + year;
             timeString = hourStr + ":" + minuteStr + ":" + secondStr
 
             timeUpdated()
