@@ -64,98 +64,28 @@ ApplicationWindow {
             }
         }
 
-        // Hour hand (Loader to dynamically create the hand)
-        Loader {
+        ClockHand {
             id: hourHandLoader
             anchors.centerIn: parent
-            sourceComponent: clockHandComponent
-            onLoaded: {
-                var hand = hourHandLoader.item
-                hand.color = clockDefinition.color_hour_hand
-                hand.angle = clock.hourAngle
-                hand.content = clock.hourHandContent
-                clock.timeUpdated.connect(function() {
-                    hand.angle = clock.hourAngle
-                    hand.content = clock.hourHandContent
-                })
-            }
+            color: clockDefinition.color_hour_hand
+            angle: clock.hourAngle
+            content: clock.hourHandContent
         }
 
-        // Minute hand (Loader to dynamically create the hand)
-        Loader {
+        ClockHand {
             id: minuteHandLoader
             anchors.centerIn: parent
-            sourceComponent: clockHandComponent
-            onLoaded: {
-                var hand = minuteHandLoader.item
-                hand.color = clockDefinition.color_minute_hand
-                hand.angle = clock.minuteAngle
-                hand.content = clock.minuteHandContent
-                clock.timeUpdated.connect(function() {
-                    hand.angle = clock.minuteAngle
-                    hand.content = clock.minuteHandContent
-                })
-            }
+            color: clockDefinition.color_minute_hand
+            angle: clock.minuteAngle
+            content: clock.minuteHandContent
         }
 
-        // Second hand (Loader to dynamically create the hand)
-        Loader {
+        ClockHand {
             id: secondHandLoader
             anchors.centerIn: parent
-            sourceComponent: clockHandComponent
-            onLoaded: {
-                var hand = secondHandLoader.item
-                hand.color = clockDefinition.color_second_hand
-                hand.angle = clock.secondAngle
-                hand.content = clock.secondHandContent
-                clock.timeUpdated.connect(function() {
-                    hand.angle = clock.secondAngle
-                    hand.content = clock.secondHandContent
-                })
-            }
-        }
-    }
-
-    // Reusable clock hand component
-    Component {
-        id: clockHandComponent
-
-        Item {
-            id: clockItem
-            property alias length: rect.height
-            property alias color: text.color
-            property alias content: text.text
-            property alias angle: clockItem.rotation
-            property bool flip: angle > 90 && angle < 270
-
-            rotation: angle
-
-            Item {
-                id: rect
-                width: handRow.contentWidth
-                height: text.contentHeight
-                anchors.centerIn: parent
-                anchors.verticalCenterOffset: flip ? text.contentHeight : 0
-                anchors.horizontalCenterOffset: flip ? text.contentWidth : 0
-
-                Row {
-                    id: handRow
-                    anchors.centerIn: parent
-                    Text {
-                        id: text
-                        font.pixelSize: clockDefinition.fontSize
-                        font.bold: true
-                        transform: Scale {
-                            xScale: flip ? -1 : 1
-                            yScale: flip ? -1 : 1
-                        }
-                    }
-                    Item {
-                        width: text.contentWidth
-                        height: text.contentHeight
-                    }
-                }
-            }
+            color: clockDefinition.color_second_hand
+            angle: clock.secondAngle
+            content: clock.secondHandContent
         }
     }
 
