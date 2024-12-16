@@ -6,7 +6,7 @@ ApplicationWindow {
     visible: true
     width: 400
     height: 400
-    title: "Analog Clock"
+    title: "Analog Digits Clock"
 
     Timer {
         interval: 1000
