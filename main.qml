@@ -41,7 +41,7 @@ ApplicationWindow {
 
                 // Position the numbers correctly in a circle
                 Component.onCompleted: {
-                    var angle = (index * 30 - 60) * (Math.PI / 180);  // Convert degrees to radians
+                    var angle = (index * 30 - 60) * (Math.PI / 180) % 360;  // Convert degrees to radians
                     var radius = 125;  // Radius of the clock face
 
                     // Calculate the X and Y offset for positioning the numbers around the circle
@@ -98,6 +98,15 @@ ApplicationWindow {
         anchors.verticalCenterOffset: clockArea.height / 6
     }
 
+    Text {
+        id: textTime
+        text: clock.timeString
+        color: clockDefinition.color_text_time
+        font.pixelSize: clockDefinition.fontSize
+        anchors.horizontalCenter: textDate.horizontalCenter
+        anchors.top: textDate.bottom
+    }
+
     // Clock object for calculating and updating time
     QtObject {
         id: clock
@@ -118,28 +127,35 @@ ApplicationWindow {
         property string secondHandContent: ""
 
         property string dateString: ""
+        property string timeString: ""
 
         function updateTime() {
-            var date = new Date()
+            const date = new Date()
 
-            hour = date.getHours() % 24 + clockDefinition.timezone
+            function pad(value) {
+                return value < 10 ? "0" + value : value.toString();
+            }
+
+            hour = (date.getHours() + clockDefinition.timezone) % 24
             minute = date.getMinutes()
             second = date.getSeconds()
 
-            function padAndRepeat(value, repeat) {
-                return (value < 10 ? "0" + value : value.toString()).repeat(repeat);
-            }
-            hourHandContent = padAndRepeat(hour, 3)
-            minuteHandContent = padAndRepeat(minute, 5)
-            secondHandContent = padAndRepeat(second, 5)
+            const hourStr = pad(hour)
+            const minuteStr = pad(minute)
+            const secondStr = pad(second)
+
+            hourHandContent = hourStr.repeat(3)
+            minuteHandContent = minuteStr.repeat(5)
+            secondHandContent = secondStr.repeat(5)
 
             // Calculate the angles for the hands
-            hourAngle = 30 * hour + 0.5 * minute + 90
-            minuteAngle = 6 * minute + 0.1 * second + 90
-            secondAngle = 6 * second + 90
+            hourAngle = (30 * hour + 0.5 * minute + 90) % 360
+            minuteAngle = (6 * minute + 0.1 * second + 90) % 360
+            secondAngle = (6 * second + 90) % 360
 
-            var dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+            const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
             dateString = date.toLocaleDateString('vi-VN', dateOptions);
+            timeString = hourStr + ":" + minuteStr + ":" + secondStr
 
             timeUpdated()
         }
@@ -153,7 +169,8 @@ ApplicationWindow {
         property color color_hour_hand: "red"
         property color color_minute_hand: "blue"
         property color color_second_hand: "green"
-        property color color_text_date: "yellow"
+        property color color_text_date: "cyan"
+        property color color_text_time: "yellow"
         property color color_text_circle: "silver"
     }
 }

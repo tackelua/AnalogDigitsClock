@@ -6,8 +6,6 @@ Item {
     property alias content: text.text
     property alias angle: clockHand.rotation
 
-    rotation: angle
-
     Item {
         id: clockHandItem
         property bool flip: angle > 90 && angle < 270
