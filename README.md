@@ -2,6 +2,8 @@
 
 **AnalogDigitsClock** is a project that visualizes time using an analog clock with a unique digital-style representation, developed using QML and C++.
 
+![AnalogDigitsClock.gif](assets/AnalogDigitsClock.gif)
+
 ## Features
 - Combines analog and digital clock aesthetics.
 - Responsive and visually appealing design using QML.
