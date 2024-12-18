@@ -68,6 +68,7 @@ ApplicationWindow {
             id: hourHandLoader
             anchors.centerIn: parent
             color: clockDefinition.color_hour_hand
+            fontSize: clockDefinition.fontSize
             angle: clock.hourAngle
             content: clock.hourHandContent
         }
@@ -76,6 +77,7 @@ ApplicationWindow {
             id: minuteHandLoader
             anchors.centerIn: parent
             color: clockDefinition.color_minute_hand
+            fontSize: clockDefinition.fontSize
             angle: clock.minuteAngle
             content: clock.minuteHandContent
         }
@@ -84,6 +86,7 @@ ApplicationWindow {
             id: secondHandLoader
             anchors.centerIn: parent
             color: clockDefinition.color_second_hand
+            fontSize: clockDefinition.fontSize
             angle: clock.secondAngle
             content: clock.secondHandContent
         }

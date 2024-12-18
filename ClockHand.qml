@@ -4,6 +4,7 @@ Item {
     id: clockHand
     property alias color: text.color
     property alias content: text.text
+    property alias fontSize: text.font.pixelSize
     property alias angle: clockHand.rotation
 
     Item {
@@ -21,7 +22,6 @@ Item {
             anchors.centerIn: parent
             Text {
                 id: text
-                font.pixelSize: clockDefinition.fontSize
                 font.bold: true
                 transform: Scale {
                     xScale: clockHandItem.flip ? -1 : 1
